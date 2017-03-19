@@ -15,6 +15,7 @@ import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.inventory.InventoryOpenEvent;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
+import cn.nukkit.event.player.PlayerDropItemEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerPreLoginEvent;
@@ -78,6 +79,13 @@ public class Main extends PluginBase implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		unLogins.add(event.getPlayer());
 		UserData.getInstance().ipLogin(event.getPlayer());
+	}
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent event){
+		if (Main.unLogins.contains(event.getPlayer())) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 
 	@EventHandler

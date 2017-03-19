@@ -84,7 +84,7 @@ public class Main extends PluginBase implements Listener {
 
 	@EventHandler
 	public void onChat(PlayerChatEvent event) {
-		if (unLogins.contains(event.getPlayer())) {
+		if (!unLogins.contains(event.getPlayer())) {
 			Set<CommandSender> recipients = new HashSet<CommandSender>();
 			event.getRecipients().stream().filter(re -> re.isPlayer() && unLogins.contains((Player) re))
 					.forEach(re -> recipients.add(re));

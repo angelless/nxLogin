@@ -73,13 +73,10 @@ public class Main extends PluginBase implements Listener {
 	}
 
 
-	@EventHandler
-	public void onPreJoin(PlayerPreLoginEvent event) {
-		unLogins.add(event.getPlayer());
-	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent event) {
+		unLogins.add(event.getPlayer());
 		UserData.getInstance().ipLogin(event.getPlayer());
 	}
 
@@ -129,14 +126,6 @@ public class Main extends PluginBase implements Listener {
 
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
-		if (Main.unLogins.contains(event.getPlayer())) {
-			event.setCancelled(true);
-			return;
-		}
-	}
-
-	@EventHandler
-	public void openInventory(InventoryOpenEvent event) {
 		if (Main.unLogins.contains(event.getPlayer())) {
 			event.setCancelled(true);
 			return;

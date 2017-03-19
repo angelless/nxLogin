@@ -1,5 +1,6 @@
 package nxlogin.commands;
 
+import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
@@ -23,6 +24,7 @@ public class RegisterCommand extends Command {
 			return true;
 		}
 		UserData.getInstance().register(sender.getName(), args[0]);
+		Server.getInstance().getCommandMap().getCommand("로그인").execute(sender, commandLabel, args);
 		return true;
 	}
 }

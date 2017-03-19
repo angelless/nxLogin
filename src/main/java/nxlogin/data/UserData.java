@@ -62,7 +62,7 @@ public class UserData {
 		}
 		UserData.password.put(user.toLowerCase(), password.toLowerCase());
 		UserData.address.put(user.toLowerCase(), guest.getAddress());
-		guest.sendMessage(Main.success("회원가입이 성공적으로 이루어졌습니다 b:: §l{pw}").replace("{pw}", password.toLowerCase()));
+		guest.sendMessage(Main.success("회원가입이 성공적으로 이루어졌습니다 §b:: §l{pw}").replace("{pw}", password.toLowerCase()));
 		return true;
 	}
 

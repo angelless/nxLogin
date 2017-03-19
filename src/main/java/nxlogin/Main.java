@@ -6,19 +6,17 @@ import java.util.Set;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.command.ConsoleCommandSender;
+
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
-import cn.nukkit.event.inventory.InventoryOpenEvent;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import cn.nukkit.event.player.PlayerDropItemEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerJoinEvent;
-import cn.nukkit.event.player.PlayerPreLoginEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 
 import cn.nukkit.plugin.PluginBase;
@@ -47,6 +45,9 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 import cn.nukkit.event.player.PlayerChatEvent;
+import cn.nukkit.event.player.PlayerPreLoginEvent;
+import cn.nukkit.event.inventory.InventoryOpenEvent;
+import cn.nukkit.command.ConsoleCommandSender;
 */
 
 public class Main extends PluginBase implements Listener {
@@ -80,6 +81,7 @@ public class Main extends PluginBase implements Listener {
 		unLogins.add(event.getPlayer());
 		UserData.getInstance().ipLogin(event.getPlayer());
 	}
+
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent event){
 		if (Main.unLogins.contains(event.getPlayer())) {
@@ -94,12 +96,12 @@ public class Main extends PluginBase implements Listener {
 			Set<CommandSender> recipients = new HashSet<CommandSender>();
 			event.getRecipients().stream().filter(re -> (re.isPlayer()&&!unLogins.contains(re))|re.isOp())
 					.forEach(re -> recipients.add(re));
-			
 			event.setRecipients(recipients);
 			return;
+		} else {
+			UserData.getInstance().passwordLogin(event.getPlayer(), event.getMessage());
+			event.setCancelled(true);
 		}
-		UserData.getInstance().passwordLogin(event.getPlayer(), event.getMessage());
-		event.setCancelled(true);
 
 	}
 
@@ -148,19 +150,19 @@ public class Main extends PluginBase implements Listener {
 		}
 	}
 
-	public static String message(String message) {
-		return new StringBuilder().append("§a§l[알림] §r§7").append(message).toString();
+	public final static String message(String message) {
+		return new StringBuilder("§a§l[알림] §r§7").append(message).toString();
 	}
 
-	public static String alert(String message) {
-		return new StringBuilder().append("§c§l[알림] §r§7").append(message).toString();
+	public final static String alert(String message) {
+		return new StringBuilder("§c§l[알림] §r§7").append(message).toString();
 	}
 
-	public static String command(String message) {
-		return new StringBuilder().append("§6§l[알림] §r§7").append(message).toString();
+	public final static String command(String message) {
+		return new StringBuilder("§6§l[알림] §r§7").append(message).toString();
 	}
 
-	public static String success(String message) {
-		return new StringBuilder().append("§b§l[안내] §r§7").append(message).toString();
+	public final static String success(String message) {
+		return new StringBuilder("§b§l[안내] §r§7").append(message).toString();
 	}
 }

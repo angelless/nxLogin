@@ -13,7 +13,7 @@ public class LoginCommand extends Command {
 		super("로그인", "로그인 명령어", "/로그인  <비밀번호>", new String[] { "login" });
 		this.setCommandParameters(new HashMap<String, CommandParameter[]>() {
 			/**
-			 * serialVersionUID waring
+			 * serialVersionUID warning
 			 */
 			private static final long serialVersionUID = 5572221817236667426L;
 
@@ -29,20 +29,19 @@ public class LoginCommand extends Command {
 
 	@Override
 	public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-		String password;
-		Player user;
 		if (!sender.isPlayer()) {
-			sender.sendMessage("인게임명령어");
+			sender.sendMessage("인게임 명령어입니다.");
+			return true;
+		} else {
+			String password;
+			try {
+				password = args[0];
+			} catch (Exception e) {
+				password = " ";
+			}
+			UserData.getInstance().passwordLogin((Player) sender, password);
 			return true;
 		}
-		try {
-			password = args[0];
-		} catch (Exception e) {
-			password = " ";
-		}
-		user = (Player) sender;
-		UserData.getInstance().passwordLogin(user, password);
-		return true;
 
 	}
 }

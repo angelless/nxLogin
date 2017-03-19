@@ -15,15 +15,15 @@ public class UnLoginPlayerTask extends PluginTask<Main> {
 		if (Main.unLogins.isEmpty()) {
 			return;
 		}
-		for (String p : Main.unLogins) {
-			Player player = this.owner.getServer().getPlayerExact(p);
-			if (player.getPosition().equals(owner.getServer().getDefaultLevel().getSpawnLocation())) {
-				player.sendTip(Main.alert("로그인 후 서버를 플레이해주세요"));
+		for (Player p : Main.unLogins) {
+			
+			if (p.getPosition().equals(owner.getServer().getDefaultLevel().getSpawnLocation())) {
+				p.sendTip(Main.alert("로그인 후 서버를 플레이해주세요"));
 				return;
 			}
-			player.sendTip(Main.alert("로그인 후 서버를 플레이해주세요"));
-			player.teleport(owner.getServer().getDefaultLevel().getSpawnLocation());
-			player.sendMessage(Main.alert("회원가입이나 로그인 후 서버를 플레이 해 주세요"));
+			p.sendTip(Main.alert("로그인 후 서버를 플레이해주세요"));
+			p.teleport(owner.getServer().getDefaultLevel().getSpawnLocation());
+			p.sendMessage(Main.alert("회원가입이나 로그인 후 서버를 플레이 해 주세요"));
 
 		}
 

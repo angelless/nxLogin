@@ -6,6 +6,7 @@ import java.util.Set;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.command.ConsoleCommandSender;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
@@ -86,8 +87,9 @@ public class Main extends PluginBase implements Listener {
 	public void onChat(PlayerChatEvent event) {
 		if (!unLogins.contains(event.getPlayer())) {
 			Set<CommandSender> recipients = new HashSet<CommandSender>();
-			event.getRecipients().stream().filter(re -> !unLogins.contains((Player) re))
+			event.getRecipients().stream().filter(re -> (re.isPlayer()&&!unLogins.contains(re))|re.isOp())
 					.forEach(re -> recipients.add(re));
+			
 			event.setRecipients(recipients);
 			return;
 		}
